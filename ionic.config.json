@@ -1,0 +1,7 @@
+{
+  "name": "tech-task-pokemon-ionic-react-gql",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

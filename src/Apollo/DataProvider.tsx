@@ -30,8 +30,8 @@ const client = new ApolloClient({
 
 
 
-export const ProviderGQL: FC<ProviderProps> = ({ children }) => {
+export const DataProvider: FC<ProviderProps> = ({ children }) => {
     return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
 
-export default ProviderGQL
+export default DataProvider

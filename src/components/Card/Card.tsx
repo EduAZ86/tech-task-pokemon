@@ -1,5 +1,4 @@
 import { FC } from "react"
-import { ICardProps } from "./types"
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonLabel, IonList } from "@ionic/react";
 import { PokemonV2Pokemon } from "../../Apollo/type";
 

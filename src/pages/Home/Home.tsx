@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../../components/ExploreContainer';
+import ExploreContainer from '../../components/Container/ExploreContainer';
 import './Home.css';
 import Card from '../../components/Card/Card';
 import { useData } from '../../Apollo/useData';

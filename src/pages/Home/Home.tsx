@@ -1,60 +1,78 @@
-import { IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../../components/Container/ExploreContainer';
-import './Home.css';
+/**
+ * @file Home component for displaying a list of Pokémon cards.
+ * @module Home
+ */
+
+import React, { useEffect } from 'react';
+import {
+  IonImg,
+  IonPage,
+  IonHeader,
+  IonSpinner,
+  IonContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent
+} from '@ionic/react';
 import Card from '../../components/Card/Card';
 import { useData } from '../../Apollo/useData';
-import { useEffect } from 'react';
 import { PokemonV2Pokemon } from '../../Apollo/type';
+import './Home.css';
 
+/**
+ * Home functional component.
+ *
+ * @component
+ * @return {JSX.Element} Home component
+ */
 const Home: React.FC = () => {
-  const { error, loading, data, getPokemons, moreGetPokemons } = useData()
+  /**
+   * Custom hook to fetch Pokémon data.
+   */
+  const { loading, data, getPokemons, moreGetPokemons } = useData();
+
+  /**
+   * Effect hook to fetch Pokémon data on component mount.
+   */
   useEffect(() => {
-    getPokemons()
-  }, [])
-  
+    getPokemons();
+  }, []);
+
+  /**
+   * Render the Home component.
+   *
+   * @return {JSX.Element} Rendered Home component
+   */
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>POKEMONS</IonTitle>
-        </IonToolbar>
+        <IonImg src='https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg' />
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
-        <IonList>
-          <IonItem>
-            {loading
-              ?
-              <span>Loading...</span>
-              :
-              data?.pokemon_v2_pokemon.map((item: PokemonV2Pokemon) => {
-                return (
-                  <Card
-                    key={item.id}
-                    {...item}
-                  />)
-              })
-            }
-          </IonItem>
-        </IonList>
+        <div className='card-container'>
+          {loading ? (
+            <IonSpinner name="circles"></IonSpinner>
+          ) : (
+            <>
+              {data?.pokemon_v2_pokemon.map((item: PokemonV2Pokemon) => (
+                <Card key={item.id} {...item} />
+              ))}
+            </>
+          )}
+        </div>
         <IonInfiniteScroll
           threshold='15%'
           position='bottom'
-
           onIonInfinite={async (ev) => {
-            await moreGetPokemons()
+            await moreGetPokemons();
             setTimeout(() => {
-              ev.target.complete()
-            }, 1000)
+              ev.target.complete();
+            }, 1000);
           }}
         >
-          <IonInfiniteScrollContent loadingSpinner={'circles'} loadingText={"Loading more Pokemons"}>
-          </IonInfiniteScrollContent>
+          <IonInfiniteScrollContent
+            loadingSpinner={'circles'}
+            loadingText={'Loading more Pokemons'}
+          ></IonInfiniteScrollContent>
         </IonInfiniteScroll>
       </IonContent>
     </IonPage>

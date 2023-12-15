@@ -2,12 +2,22 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_POKEMONS } from "../Apollo/query";
 import { useEffect, useState } from "react";
 
+/**
+* Custom hook for fetching Pokémon data using Apollo Client.
+*
+* @function
+* @returns {Object} Object containing data, loading, error, and functions for fetching more Pokémon data.
+*/
 export const useData = () => {
   const ALLPOKEMONS = 10275;
   const RANGE = 10;
+  // Map to store offsets for random Pokémon fetching.
   const [mapOffsets, setMapOffsets] = useState<Map<number, number> | null>(null);
   const [currentOffset, setCurrentOffset] = useState<number>(0);
-  const [loadPokemons, { data, error, loading, refetch, fetchMore }] = useLazyQuery(GET_POKEMONS);
+  /**
+  * Apollo Client hook for lazy loading Pokémon data.
+  */
+  const [loadPokemons, { data, error, loading, fetchMore }] = useLazyQuery(GET_POKEMONS);
 
   useEffect(() => {
     if (mapOffsets === null) {
@@ -20,7 +30,9 @@ export const useData = () => {
     }
   }, [])
 
-
+  /**
+  * Function to set a random offset from available offsets.
+  */
   const randomOffset = () => {
     let randomPosition = 0
     if (mapOffsets) {
@@ -34,20 +46,19 @@ export const useData = () => {
       setCurrentOffset(randomPosition);
     }
   };
-
-
-  // Get random position
-
-
+  /**
+   * Function to fetch more Pokémon data with a new random offset.
+   */
   const moreGetPokemons = () => {
     randomOffset()
     fetchMore({ variables: { offset: currentOffset } })
   }
-
+  /**
+  * Function to fetch Pokémon data with a random offset.
+  */
   const getPokemons = () => {
     randomOffset()
-    loadPokemons({ variables: { offset: currentOffset } })
+    loadPokemons({ variables: { offset: (Math.floor(Math.random() * (ALLPOKEMONS / RANGE) / 10)) } })
   }
-
   return { error, loading, data, getPokemons, moreGetPokemons };
 };

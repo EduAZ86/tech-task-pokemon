@@ -11,10 +11,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     getPokemons()
   }, [])
-
-  console.log(data);
-
-
+  
   return (
     <IonPage>
       <IonHeader>

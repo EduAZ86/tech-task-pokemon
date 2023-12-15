@@ -23,7 +23,16 @@ export interface PokemonV2Pokemon {
     id: number;
     pokemon_v2_pokemonabilities?: PokemonV2Pokemonability[];
     pokemon_v2_pokemonsprites?: PokemonV2Pokemonsprite[];
+    pokemon_v2_pokemontypes:     PokemonV2Pokemontype[];
 }
+export interface PokemonV2Pokemontype {
+    pokemon_v2_type: PokemonV2Type;
+}
+
+export interface PokemonV2Type {
+    name: 'bug'|'dark'|'dragon'|'electric'|'fairy'|'fighting'|'fire'|'flying'|'ghost'|'grass'|'ground'|'ice'|'normal'|'poison'|'psychic'|'rock'|'steel'|'water';
+}
+
 
 export interface ProviderProps {
     children: ReactNode;
